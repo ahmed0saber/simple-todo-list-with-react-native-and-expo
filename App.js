@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Alert, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import DeleteIcon from "./components/delete-icon.jsx"
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { StatusBar } from 'expo-status-bar';
 
 const saveTodoItems = async (items) => {
   await AsyncStorage.setItem("stored-todo-items", JSON.stringify(items))
@@ -51,43 +52,46 @@ export default function App() {
   }, [todoItems])
 
   return (
-    <SafeAreaView style={styles.safeContainer}>
-      <ScrollView>
-        <TextInput
-          style={styles.addInput}
-          placeholder="Enter your task here"
-          value={todoTitle}
-          onChangeText={setTodoTitle}
-        />
-        <Pressable
-          style={styles.addButton}
-          onPress={addNewTask}
-        >
-          <Text style={styles.addButtonText}>Add New Task</Text>
-        </Pressable>
-        <View style={styles.tasksContainer}>
-          {todoItems.length === 0 ? (
-            <View style={styles.taskWrapper}>
-              <Text style={{ flex: 1 }}>No tasks here, try to add some!</Text>
-            </View>
-          ) : null}
-          {todoItems.map(item => (
-            <View key={item.id} style={styles.taskWrapper}>
-              <Text style={{ flex: 1 }}>{item.title}</Text>
-              <Pressable
-                onPress={() => deleteItem(item.id)}
-              >
-                <DeleteIcon
-                  width="24px"
-                  height="24px"
-                  stroke="#000009"
-                />
-              </Pressable>
-            </View>
-          ))}
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <>
+      <SafeAreaView style={styles.safeContainer}>
+        <ScrollView>
+          <TextInput
+            style={styles.addInput}
+            placeholder="Enter your task here"
+            value={todoTitle}
+            onChangeText={setTodoTitle}
+          />
+          <Pressable
+            style={styles.addButton}
+            onPress={addNewTask}
+          >
+            <Text style={styles.addButtonText}>Add New Task</Text>
+          </Pressable>
+          <View style={styles.tasksContainer}>
+            {todoItems.length === 0 ? (
+              <View style={styles.taskWrapper}>
+                <Text style={{ flex: 1 }}>No tasks here, try to add some!</Text>
+              </View>
+            ) : null}
+            {todoItems.map(item => (
+              <View key={item.id} style={styles.taskWrapper}>
+                <Text style={{ flex: 1 }}>{item.title}</Text>
+                <Pressable
+                  onPress={() => deleteItem(item.id)}
+                >
+                  <DeleteIcon
+                    width="24px"
+                    height="24px"
+                    stroke="#000009"
+                  />
+                </Pressable>
+              </View>
+            ))}
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+      <StatusBar style="light" backgroundColor='#000009' />
+    </>
   );
 }
 
@@ -97,7 +101,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#eff2fb",
     paddingTop: 48,
     paddingRight: 24,
-    paddingBottom: 48,
+    paddingBottom: 24,
     paddingLeft: 24,
   },
   addInput: {
