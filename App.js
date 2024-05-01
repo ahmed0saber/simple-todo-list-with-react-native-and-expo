@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Alert, Pressable, SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import DeleteIcon from "./components/delete-icon.jsx"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -52,7 +52,7 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.safeContainer}>
-      <View>
+      <ScrollView>
         <TextInput
           style={styles.addInput}
           placeholder="Enter your task here"
@@ -86,7 +86,7 @@ export default function App() {
             </View>
           ))}
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
