@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Pressable, SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, Pressable, SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native';
 import DeleteIcon from "./components/delete-icon.jsx"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -26,11 +26,16 @@ export default function App() {
   }, [])
 
   const addNewTask = () => {
+    if (todoTitle.trim() === "") {
+      Alert.alert("Task title is required!", "Please enter task title, and try again..")
+      return
+    }
+
     setTodoItems(prev => [
       ...prev,
       {
         id: Date.now(),
-        title: todoTitle,
+        title: todoTitle.trim(),
       }
     ])
 
